@@ -161,3 +161,9 @@ print(python_date.month)
 
 human_date = python_date.strftime('Year: %y, month: %B, day: %d')
 print(human_date)
+
+
+
+
+new_list = map(lambda x: x * 2, my_list)
+print(list(new_list))
