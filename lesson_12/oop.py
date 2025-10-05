@@ -17,6 +17,7 @@ def read_file1(filename):
 
 data1 = read_file1("data1.txt")
 data2 = read_file1("data2.txt")
+print()
 
 print(data1['Country'])
 print(data1['avg_temp'])
