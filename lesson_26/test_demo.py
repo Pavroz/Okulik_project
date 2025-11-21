@@ -38,4 +38,3 @@ def test_by_label():
         page.goto('https://ya.ru/')
         page.get_by_role('combobox').fill('Playwright')
         page.keyboard.press('Enter')
-        sleep(5)
