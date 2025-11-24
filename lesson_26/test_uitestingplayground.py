@@ -57,3 +57,31 @@ class TestUi:
         page.locator('a[href="/verifytext"]').click()
         # text = 'Welcome'
         expect(page.get_by_text("Welcome", exact=True)).to_be_hidden()
+
+    def test_progress_bar(self, page: Page, base_page, open):
+        page.locator('a[href="/progressbar"]').click()
+        start_button = page.locator('#startButton')
+        stop_button = page.locator('#stopButton')
+        progress_bar = page.locator('#progressBar')
+        start_button.click()
+        while True:
+            text = progress_bar.inner_text() # inner_text() - получение текста из эелмента
+            value = int(text.rstrip('%'))
+            if value >= 75:
+                stop_button.click()
+                break
+
+    def test_visibility(self, page: Page, base_page, open):
+        page.locator('a[href="/visibility"]').click()
+        page.locator("#hideButton").click()
+
+        # Эти кнопки становятся НЕВИДИМЫМИ по критериям Playwright
+        expect(page.locator("#removedButton")).not_to_be_attached()  # удалена из DOM
+        expect(page.locator("#zeroWidthButton")).to_be_hidden()  # width: 0
+        expect(page.locator("#invisibleButton")).to_be_hidden()  # visibility: hidden
+        expect(page.locator("#notdisplayedButton")).to_be_hidden()  # display: none
+
+        # Эти три — Playwright считает ВИДИМЫМИ (это и есть суть задания!)
+        expect(page.locator("#transparentButton")).to_be_visible()  # opacity: 0
+        expect(page.locator("#overlappedButton")).to_be_visible()  # перекрыта
+        expect(page.locator("#offscreenButton")).to_be_visible()  # сдвинута влево на -100px
